@@ -40,10 +40,10 @@ function App() {
         <Navbar theme={toggleMode} mode={mode} icon={icon} />
         <Routes>
           <Route path="/" element={<Container key="general" mode={mode} icon={icon} country={"in"} category={"general"} />} />
-          <Route path="technology" element={<Container key="technology" mode={mode} icon={icon} country={"in"} category={"technology"} />} />
-          <Route path="science" element={<Container key="science" mode={mode} icon={icon} country={"in"} category={"science"} />} />
-          <Route path="sports" element={<Container key="sports" mode={mode} icon={icon} country={"in"} category={"sports"} />} />
-          <Route path="entertainment" element={<Container key="entertainment" mode={mode} icon={icon} country={"in"} category={"entertainment"} />} />
+          <Route path="/technology" element={<Container key="technology" mode={mode} icon={icon} country={"in"} category={"technology"} />} />
+          <Route path="/science" element={<Container key="science" mode={mode} icon={icon} country={"in"} category={"science"} />} />
+          <Route path="/sports" element={<Container key="sports" mode={mode} icon={icon} country={"in"} category={"sports"} />} />
+          <Route path="/entertainment" element={<Container key="entertainment" mode={mode} icon={icon} country={"in"} category={"entertainment"} />} />
         </Routes>
       </Router>
     </>
