@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
 export default function Time() {
-
-    var count = 1;
     const [first, setfirst] = useState(new Date().toLocaleTimeString());
 
     setInterval(() => {

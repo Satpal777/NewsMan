@@ -1,30 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import React from 'react'
+import newsContext from '../context/NewsContext';
 import Card from './Card';
+import { useContext } from 'react';
 import Spinner from './Spinner';
-import { Route,Routes} from 'react-router-dom'
+var a=0
 
-import Detail from './Detail'
 
 export default function Container(props) {
-
-  const [output, setOutput] = useState([]);
+  const [unfiltered, setUnfiltered] = useState([]);
   const [load, setload] = useState(false)
-  let bgColors = ["#dcedc8","#ffecec","#b2eaf2"];
+  let bgColors = ["#dcedc8", "#ffecec", "#b2eaf2"];
+
+
+  const contextData = useContext(newsContext);
+  
+
+
   const update = async () => {
-      setload(true);
-    var url = 'https://newsapi.org/v2/top-headlines?country='+props.country+'&category='+props.category+'&apiKey='+process.env.REACT_APP_API_KEY;
+    setload(true);
+    var url = 'https://newsapi.org/v2/top-headlines?country=' + props.country + '&category=' + props.category + '&apiKey=' + process.env.REACT_APP_API_KEY;
     await fetch(url)
       .then(res => res.json())
       .then(
         (result) => {
-          setOutput(result.articles);
+          setUnfiltered(result.articles);
+          contextData.setOut(result.articles);
+          contextData.holder=result.articles;
           setload(false);
         }
       )
   }
-  
-  var url = props.category+"/";
- 
+
+
+
   // function update() {
   //   var xmlhttp = new XMLHttpRequest();
   //   var url="https://newsdata.io/api/1/news?apikey=pub_44529f657e2ba87db683493b51f9dec4bd3e&q=pegasus";
@@ -37,36 +46,44 @@ export default function Container(props) {
   // xmlhttp.open("GET",url);
   // xmlhttp.send();
   // }
-console.log(`${url}:id`);
-  useEffect(() => {
-    update();
-  }
-    , [])
-    var id = 0;
 
+  useEffect(() => update(),[])
+  var id = 0;
   return (
-      <div className={`container bg-${props.mode} pt-3 d-flex flex-wrap align-items-center justify-content-center m-auto`}>
+
+    <div className={`container bg-${props.mode} pt-3 d-flex flex-wrap align-items-center justify-content-center m-auto`}>
+
       {
-      load && <Spinner />
+        load && <Spinner />
       }
-        
-        { 
-          output.map((e, i) => {
-            var index= i%3;
-            var info = {
-              title: e.title,
-              desc: e.description == null ? "No descrption..." : e.description,
-              imgurl: e.urlToImage == null ? "images/null" : e.urlToImage,
-              id:id++
-            };
 
-            return <Card key={i} info={info} bgColors={bgColors[index]} />;
-          })
-        }
-      </div>
-    
+      {
+         !contextData.filter.filter&&(unfiltered.map((e, i) => {
+          var index = i % 3;
+          var info = {
+            title: e.title,
+            desc: e.description == null ? "No descrption..." : e.description,
+            imgurl: e.urlToImage == null ? "images/null" : e.urlToImage,
+            id: id++
+          };
+          return <Card key={i} info={info} bgColors={bgColors[index]} />;
+        }))
+      }
+      {
+         contextData.filter.filter&&(contextData.output.map((e, i) => {
+          var index = i % 3;
+          var info = {
+            title: e.title,
+            desc: e.description == null ? "No descrption..." : e.description,
+            imgurl: e.urlToImage == null ? "images/null" : e.urlToImage,
+            id: id++
+          };
+          return <Card key={i} info={info} bgColors={bgColors[index]} />;
+        }))
+      }
+    </div>
   );
-
 }
+
 
 

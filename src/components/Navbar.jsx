@@ -1,14 +1,32 @@
-import React from 'react';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom'
+import newsContext from '../context/NewsContext';
 import Time from './Time';
+
 const title = "NewsMan";
+
+
+
 
 export default function Navbar(props) {
 
-  // const toggle = () => {
-  //   props.settheme("dark");
-  // console.log();
-  // }
+  
+  const data  = useContext(newsContext);
+     
+  const search = (value)=>{
+    if(value===""){
+      data.updateFilter(false,"");
+    }
+    else{
+      data.updateFilter(true,value);
+      console.log(data);
+      var o = data.output.filter((val)=>{
+        return val.title.includes(value);
+      })
+      data.setOut(o);
+    }
+  }
+
   return (
     <div className="sticky-top mb-2">
       <nav className={`navbar navbar-expand-lg navbar-${props.mode === "light" ? "dark" : "light"} bg-${props.mode === "light" ? "dark" : "light"}`}>
@@ -38,8 +56,7 @@ export default function Navbar(props) {
             </ul>
             <i onClick={props.theme} className={`fs-3 me-4 p-1 bi ${props.icon.iconclass} p-0 m-0`} style={{ color: props.icon.iconcolor,cursor:"pointer"}} ></i>
             <form className="d-flex">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
+              <input className="form-control me-2" onChange={(e)=>{search(e.target.value)}} type="search"  placeholder="Search" aria-label="Search" />
             </form>
           </div>
         </div>
