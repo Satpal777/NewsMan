@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import '../styles/App.css';
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Navbar from './Navbar';
 import Container from './Container';
+import NewsState from '../context/NewsState';
 
 
 
@@ -13,9 +14,9 @@ function App() {
   const [mode, setMode] = useState("light");
   const [icon, seticon] = useState({
     iconcolor: "#ffeb3b",
-    iconclass: "bi-emoji-sunglasses-fill"
+    iconclass: "bi-emoji-sunglasses-fill animate__animated animate__flip"
   })
-  root.style.background = mode == "light" ? "#ffffff" : "#000000";
+  root.style.background = mode === "light" ? "#ffffff" : "#000000";
   const toggleMode = () => {
     if (mode === 'light') {
       setMode('dark');
@@ -36,6 +37,7 @@ function App() {
   return (
 
     <>
+    <NewsState>
       <Router>
         <Navbar theme={toggleMode} mode={mode} icon={icon} />
         <Routes>
@@ -46,20 +48,21 @@ function App() {
           <Route path="/entertainment" element={<Container key="entertainment" mode={mode} icon={icon} country={"in"} category={"entertainment"} />} />
         </Routes>
       </Router>
-    </>
-  );
+      </NewsState>
+      </>
+      );
 }
-App.defaultProps = {
-  country: "in",
-  category: "general",
-  mode: "light",
-  icon: "bi-emoji-sunglasses-fill"
+      App.defaultProps = {
+        country: "in",
+      category: "general",
+      mode: "light",
+      icon: "bi-emoji-sunglasses-fill"
 }
-App.prototypes = {
-  country: PropTypes.string,
-  category: PropTypes.string,
-  mode: PropTypes.string,
-  icon: PropTypes.string
+      App.prototypes = {
+        country: PropTypes.string,
+      category: PropTypes.string,
+      mode: PropTypes.string,
+      icon: PropTypes.string
 }
 
-export default App;
+      export default App;

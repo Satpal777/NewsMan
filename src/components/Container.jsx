@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import Spinner from './Spinner';
+import { Route,Routes} from 'react-router-dom'
+
+import Detail from './Detail'
 
 export default function Container(props) {
 
@@ -18,10 +21,10 @@ export default function Container(props) {
           setload(false);
         }
       )
-
-
   }
   
+  var url = props.category+"/";
+ 
   // function update() {
   //   var xmlhttp = new XMLHttpRequest();
   //   var url="https://newsdata.io/api/1/news?apikey=pub_44529f657e2ba87db683493b51f9dec4bd3e&q=pegasus";
@@ -34,34 +37,36 @@ export default function Container(props) {
   // xmlhttp.open("GET",url);
   // xmlhttp.send();
   // }
-
+console.log(`${url}:id`);
   useEffect(() => {
     update();
   }
     , [])
+    var id = 0;
 
   return (
-    <>
       <div className={`container bg-${props.mode} pt-3 d-flex flex-wrap align-items-center justify-content-center m-auto`}>
-    {
+      {
       load && <Spinner />
-    }
+      }
+        
         { 
-          
           output.map((e, i) => {
             var index= i%3;
             var info = {
               title: e.title,
               desc: e.description == null ? "No descrption..." : e.description,
               imgurl: e.urlToImage == null ? "images/null" : e.urlToImage,
-              link: e.link
+              id:id++
             };
+
             return <Card key={i} info={info} bgColors={bgColors[index]} />;
           })
         }
       </div>
-    </>
+    
   );
+
 }
 
 
