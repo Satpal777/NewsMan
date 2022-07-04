@@ -32,21 +32,6 @@ export default function Container(props) {
       )
   }
 
-
-
-  // function update() {
-  //   var xmlhttp = new XMLHttpRequest();
-  //   var url="https://newsdata.io/api/1/news?apikey=pub_44529f657e2ba87db683493b51f9dec4bd3e&q=pegasus";
-  //   xmlhttp.onreadystatechange = function(){
-  //   if(xmlhttp.readyState==4 && xmlhttp.status==200){
-  //       var result = JSON.parse(xmlhttp.responseText);
-  //       setOutput(result.results);
-  //   }
-  // }
-  // xmlhttp.open("GET",url);
-  // xmlhttp.send();
-  // }
-
   useEffect(() => update(),[])
   var id = 0;
   return (
