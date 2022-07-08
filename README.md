@@ -1,3 +1,17 @@
+# NewsMan
+
+NewsMan is a website made using reactjs and Newsapi by newsapi.org
+
+# Features
+
+- Single Page Application
+- Categorized News
+- Short News
+- Light/Dark mode
+
+# Screenshots
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
